@@ -1,0 +1,24 @@
+# Dependency folders
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Local environment/credential files
+.env
+client/.env
+server/.env
+client/.env.local
+server/.data/
+
+# Compilation outputs
+client/dist/
+build/
+dist/
+
+# OS and Editor configs
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.suo
+*.sln
