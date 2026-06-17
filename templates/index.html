@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BigQuery Release Notes Tracker</title>
+    <meta name="description" content="A premium real-time tracker for Google BigQuery release notes and updates with advanced filtering and search.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar / Statistics and Filter Section -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo-wrapper">
+                    <i class="fa-solid fa-database logo-icon"></i>
+                    <span class="logo-dot"></span>
+                </div>
+                <div>
+                    <h1 class="logo-text">BigQuery</h1>
+                    <p class="logo-subtext">Release Feed</p>
+                </div>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="search-container">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="search-input" placeholder="Search updates..." autocomplete="off">
+                <button id="search-clear-btn" class="search-clear-btn" style="display: none;">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Statistics Panel -->
+            <div class="section-container">
+                <h2 class="section-title">Overview Statistics</h2>
+                <div class="stats-grid">
+                    <div class="stat-card" data-category="total">
+                        <div class="stat-header">
+                            <span class="stat-label">Total Notes</span>
+                            <div class="stat-icon-bg bg-blue">
+                                <i class="fa-solid fa-list-check"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="stat-total">-</div>
+                    </div>
+                    <div class="stat-card" data-category="announcement">
+                        <div class="stat-header">
+                            <span class="stat-label">Announcements</span>
+                            <div class="stat-icon-bg bg-yellow">
+                                <i class="fa-solid fa-bullhorn"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="stat-announcements">-</div>
+                    </div>
+                    <div class="stat-card" data-category="feature">
+                        <div class="stat-header">
+                            <span class="stat-label">Features</span>
+                            <div class="stat-icon-bg bg-purple">
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="stat-features">-</div>
+                    </div>
+                    <div class="stat-card" data-category="fix">
+                        <div class="stat-header">
+                            <span class="stat-label">Fixes</span>
+                            <div class="stat-icon-bg bg-green">
+                                <i class="fa-solid fa-circle-check"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="stat-fixes">-</div>
+                    </div>
+                    <div class="stat-card" data-category="deprecation">
+                        <div class="stat-header">
+                            <span class="stat-label">Deprecations</span>
+                            <div class="stat-icon-bg bg-red">
+                                <i class="fa-solid fa-circle-exclamation"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value" id="stat-deprecations">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories Checklist / Quick Filters -->
+            <div class="section-container">
+                <h2 class="section-title">Filter by Category</h2>
+                <div class="filter-options">
+                    <button class="filter-pill active" data-filter="all">
+                        <span>All Updates</span>
+                        <span class="filter-count" id="count-all">0</span>
+                    </button>
+                    <button class="filter-pill" data-filter="Announcement">
+                        <span class="pill-dot bg-yellow"></span>
+                        <span>Announcement</span>
+                        <span class="filter-count" id="count-announcements">0</span>
+                    </button>
+                    <button class="filter-pill" data-filter="Feature">
+                        <span class="pill-dot bg-purple"></span>
+                        <span>Feature</span>
+                        <span class="filter-count" id="count-features">0</span>
+                    </button>
+                    <button class="filter-pill" data-filter="Fix">
+                        <span class="pill-dot bg-green"></span>
+                        <span>Fix / Bug</span>
+                        <span class="filter-count" id="count-fixes">0</span>
+                    </button>
+                    <button class="filter-pill" data-filter="Deprecation">
+                        <span class="pill-dot bg-red"></span>
+                        <span>Deprecation</span>
+                        <span class="filter-count" id="count-deprecations">0</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Footer Details -->
+            <div class="sidebar-footer">
+                <div class="feed-status">
+                    <span class="pulse-indicator"></span>
+                    <span id="sync-status">Syncing...</span>
+                </div>
+                <div class="legal">
+                    Data sourced from Google Cloud Feeds
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Feed Window -->
+        <main class="main-content">
+            <header class="feed-header">
+                <div class="header-titles">
+                    <h2 id="feed-title">BigQuery - Release Notes</h2>
+                    <p class="header-desc">Stay up-to-date with Google BigQuery's latest improvements, deprecations, and features.</p>
+                </div>
+                <div class="header-actions">
+                    <button id="refresh-btn" class="action-btn" title="Refresh Release Notes">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                        <span>Sync Now</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Active Filters Indicators -->
+            <div class="active-filters-bar" id="active-filters-bar" style="display: none;">
+                <span class="filter-bar-label">Active filters:</span>
+                <div class="active-filters-list" id="active-filters-list">
+                    <!-- Dynamic tag chips -->
+                </div>
+                <button id="clear-all-filters" class="clear-all-btn">Clear All</button>
+            </div>
+
+            <!-- Feed Content Container -->
+            <div class="feed-container" id="feed-container">
+                <!-- Loading Skeletons (Shown initially and during refresh) -->
+                <div class="loading-skeletons" id="loading-skeletons">
+                    <div class="skeleton-card">
+                        <div class="skeleton-header">
+                            <div class="skeleton-circle"></div>
+                            <div class="skeleton-line-long"></div>
+                        </div>
+                        <div class="skeleton-body">
+                            <div class="skeleton-line-full"></div>
+                            <div class="skeleton-line-full"></div>
+                            <div class="skeleton-line-short"></div>
+                        </div>
+                    </div>
+                    <div class="skeleton-card">
+                        <div class="skeleton-header">
+                            <div class="skeleton-circle"></div>
+                            <div class="skeleton-line-long"></div>
+                        </div>
+                        <div class="skeleton-body">
+                            <div class="skeleton-line-full"></div>
+                            <div class="skeleton-line-short"></div>
+                        </div>
+                    </div>
+                    <div class="skeleton-card">
+                        <div class="skeleton-header">
+                            <div class="skeleton-circle"></div>
+                            <div class="skeleton-line-long"></div>
+                        </div>
+                        <div class="skeleton-body">
+                            <div class="skeleton-line-full"></div>
+                            <div class="skeleton-line-full"></div>
+                            <div class="skeleton-line-short"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-state" id="empty-state" style="display: none;">
+                    <div class="empty-icon">
+                        <i class="fa-regular fa-folder-open"></i>
+                    </div>
+                    <h3>No Release Notes Found</h3>
+                    <p>We couldn't find any release notes matching your search criteria or active filters. Try refining your queries.</p>
+                    <button id="reset-filters-btn" class="primary-btn">Reset Filters</button>
+                </div>
+
+                <!-- Notes List -->
+                <div class="notes-list" id="notes-list">
+                    <!-- Release note items will be dynamically injected here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Script File -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
