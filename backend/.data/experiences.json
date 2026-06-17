@@ -1,0 +1,16 @@
+[
+  {
+    "_id": "exp1",
+    "role": "AI/ML Engineering Student",
+    "company": "University Academic Program",
+    "duration": "2023 - Present",
+    "description": "Conducting research in neural pathfinder planning and convolutional model optimization."
+  },
+  {
+    "_id": "exp2",
+    "role": "Full-Stack Web Intern",
+    "company": "Dev Corp",
+    "duration": "Summer 2025",
+    "description": "Developed internal dashboard widgets, reducing API data loading overhead by 30%."
+  }
+]

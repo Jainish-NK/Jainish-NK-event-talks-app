@@ -1,0 +1,36 @@
+[
+  {
+    "_id": "proj1",
+    "title": "Neural-Visual Path Finder",
+    "description": "Deep learning path planning visualizer built for drone navigation in obstacle-dense dynamic environments.",
+    "category": "Machine Learning",
+    "tags": [
+      "Python",
+      "PyTorch",
+      "TensorFlow",
+      "React",
+      "OpenCV"
+    ],
+    "github": "https://github.com/Jainish-NK",
+    "live": "https://github.com/Jainish-NK",
+    "image": "https://images.unsplash.com/photo-1507668077129-56e32842fceb?auto=format&fit=crop&w=800&q=80",
+    "featured": true
+  },
+  {
+    "_id": "proj2",
+    "title": "BigQuery Release Feed Tracker",
+    "description": "Full-stack real-time tracker that parses Google Cloud BigQuery RSS/Atom release notes into a dynamic glassmorphic feeds panel.",
+    "category": "Web Development",
+    "tags": [
+      "Node.js",
+      "Express",
+      "Flask",
+      "Vanilla CSS",
+      "JavaScript"
+    ],
+    "github": "https://github.com/Jainish-NK/Jainish-NK-event-talks-app",
+    "live": "https://github.com/Jainish-NK/Jainish-NK-event-talks-app",
+    "image": "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=800&q=80",
+    "featured": true
+  }
+]

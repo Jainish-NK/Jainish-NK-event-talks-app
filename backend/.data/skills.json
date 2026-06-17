@@ -1,0 +1,50 @@
+[
+  {
+    "_id": "s1",
+    "name": "Python",
+    "category": "Languages",
+    "level": 90
+  },
+  {
+    "_id": "s2",
+    "name": "JavaScript",
+    "category": "Languages",
+    "level": 85
+  },
+  {
+    "_id": "s3",
+    "name": "PyTorch & TensorFlow",
+    "category": "AI / ML",
+    "level": 80
+  },
+  {
+    "_id": "s4",
+    "name": "Scikit-Learn",
+    "category": "AI / ML",
+    "level": 85
+  },
+  {
+    "_id": "s5",
+    "name": "React.js",
+    "category": "Web Development",
+    "level": 80
+  },
+  {
+    "_id": "s6",
+    "name": "Node.js & Express",
+    "category": "Web Development",
+    "level": 75
+  },
+  {
+    "_id": "s7",
+    "name": "MongoDB / SQL",
+    "category": "Web Development",
+    "level": 75
+  },
+  {
+    "_id": "s8",
+    "name": "Git & Docker",
+    "category": "Tools",
+    "level": 85
+  }
+]
