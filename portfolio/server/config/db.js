@@ -1,12 +1,17 @@
 const mongoose = require("mongoose");
+const setupJsonDbFallback = require("./jsonDbFallback");
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/jainish_portfolio");
+    const uri = process.env.MONGODB_URI || process.env.MONGO_URI || "mongodb://localhost:27017/jainish_portfolio";
+    // Set connection timeout to 3 seconds for local checks
+    const conn = await mongoose.connect(uri, {
+      serverSelectionTimeoutMS: 3000
+    });
     console.log(`🟢 MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.error(`🔴 MongoDB Connection Error: ${error.message}`);
-    // Do not crash the entire process during server start to allow fallback testing if needed
+    setupJsonDbFallback();
   }
 };
 
